@@ -2,20 +2,40 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: sa_identity
+          POSTGRES_PASSWORD: teste123
+          POSTGRES_DB: authdb
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Set up Docker Compose
+      run: docker-compose -f docker-compose.yml up -d
+
     - name: Set up .NET
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v2
       with:
         dotnet-version: '8.0.x'
 
@@ -25,11 +45,14 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
 
-    - name: Test
+    - name: Run tests
       run: dotnet test --no-build --verbosity normal
 
-    - name: Build and push Docker images
-      run: |
-        docker build -t <dockerhub-username>/authentication-service:latest ./src/AuthenticationService
-        docker push <dockerhub-username>/authentication-service:latest
+    - name: Build Docker image
+      run: docker build -t your-dockerhub-username/eshop-authentication:latest -f src/Services/ALC.Authentication.API/Dockerfile .
 
+    - name: Login to DockerHub
+      run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+    - name: Push Docker image
+      run: docker push your-dockerhub-username/eshop-authentication:latest
