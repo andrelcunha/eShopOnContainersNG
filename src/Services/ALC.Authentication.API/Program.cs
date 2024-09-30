@@ -1,4 +1,5 @@
 using ALC.Authentication.API.Configuration;
+using ALC.Authentication.API.Services;
 
 namespace ALC.Authentication.API;
 
@@ -15,6 +16,8 @@ public class Program
         builder.Services.AddApiConfiguration();
 
         builder.Services.AddSwaggerConfiguration();
+
+        builder.Services.AddScoped<ITokenService, TokenService>();
 
         var app = builder.Build();
         var env =  app.Environment;
