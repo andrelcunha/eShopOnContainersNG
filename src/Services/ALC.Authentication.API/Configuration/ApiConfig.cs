@@ -1,14 +1,15 @@
+using ALC.Authentication.API.Authentication;
+
 namespace ALC.Authentication.API.Configuration;
 
 public static class ApiConfig
 {
     public static IServiceCollection AddApiConfiguration(this IServiceCollection services)
     {
-        services.AddAuthorization();
+        // services.AddAuthorization();
 
         services.AddControllers();
 
-        services.AddSwaggerConfiguration();
         return services;
     }
 
@@ -19,6 +20,18 @@ public static class ApiConfig
         {
             app.UseSwaggerConfiguration();
         }
+
+        app.UseHttpsRedirection();
+
+        app.UseRouting();
+
+        app.UseAuthConfiguration();
+
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+        });
+
         return app;
     }
 

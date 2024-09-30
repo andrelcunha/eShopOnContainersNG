@@ -1,4 +1,5 @@
 
+using ALC.Authentication.API.Authentication;
 using ALC.Authentication.API.Configuration;
 
 namespace ALC.Authentication.API;
@@ -8,24 +9,19 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        var configuration = builder.Configuration;
  
         builder.Services.AddApiConfiguration();
+
+        builder.Services.AddAuthConfiguration(configuration);
 
         builder.Services.AddSwaggerConfiguration();
 
         var app = builder.Build();
         var env =  app.Environment;
 
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwaggerConfiguration();
-        }
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
-        app.MapControllers();
+        app.UseApiConfiguration(env);
 
         app.Run();
     }
