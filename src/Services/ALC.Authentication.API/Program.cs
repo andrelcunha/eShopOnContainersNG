@@ -19,6 +19,8 @@ public class Program
         var app = builder.Build();
         var env =  app.Environment;
 
+        app.UseMigration(app.Services);
+
         app.UseApiConfiguration(env);
 
         app.Run();
