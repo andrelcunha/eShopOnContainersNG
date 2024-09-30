@@ -1,0 +1,6 @@
+@ALC.Authentication.API_HostAddress = http://localhost:5042
+
+GET {{ALC.Authentication.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
