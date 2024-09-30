@@ -30,6 +30,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: Set up Docker Compose
       run: docker-compose up -d
 
     - name: Set up .NET
