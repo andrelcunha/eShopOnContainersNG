@@ -11,8 +11,11 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Username=sa_identity;Password=teste123;Database=authdb
     depends_on:
       - postgres
+    command: ["./wait-for-it.sh", "postgres:5432", "--", "dotnet", "ALC.Authentication.API.dll"]
+
 
   postgres:
     image: postgres:latest

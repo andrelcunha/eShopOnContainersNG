@@ -5,11 +5,11 @@ namespace ALC.Authentication.API.Configuration;
 
 public static class MigrationConfig
 {
-    public static void UseMigration (this IApplicationBuilder app, IServiceProvider services)
+    public static void UseMigration (this IApplicationBuilder app)
     {
         // Apply migrations at startup
-        using var scope = services.CreateScope();
-        var scopedServices = scope.ServiceProvider;
+        using var scope = app.ApplicationServices.CreateScope();
+        var services = scope.ServiceProvider;
         try
         {
             var context = services.GetRequiredService<AuthDbContext>();
