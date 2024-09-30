@@ -1,8 +1,13 @@
 using ALC.Authentication.API.Authentication;
 using ALC.Authentication.API.Controllers;
 using ALC.Authentication.API.Models;
+using ALC.Authentication.API.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Moq;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace ALC.Authentication.API.Tests;
 
@@ -10,6 +15,10 @@ public class AuthControllerTests
 {
     private readonly AuthController _controller;
     private readonly IOptions<JwtSettings> _options;
+    private readonly Mock<UserManager<IdentityUser>> _userManagerMock;
+    private readonly Mock<SignInManager<IdentityUser>> _signInManagerMock;
+
+    private readonly Mock<ITokenService> _tokenServiceMock;
 
     public AuthControllerTests()
     {
@@ -22,23 +31,48 @@ public class AuthControllerTests
         };
 
         _options = Options.Create(jwtSettings);
-        _controller = new AuthController(_options);
+
+        _userManagerMock = new Mock<UserManager<IdentityUser>>(
+                new Mock<IUserStore<IdentityUser>>().Object,
+                null, null, null, null, null, null, null, null);
+
+        _signInManagerMock = new Mock<SignInManager<IdentityUser>>(
+                _userManagerMock.Object,
+                new Mock<IHttpContextAccessor>().Object,
+                new Mock<IUserClaimsPrincipalFactory<IdentityUser>>().Object,
+                null, null, null, null);
+
+        _tokenServiceMock = new Mock<ITokenService>();
+
+        _controller = new AuthController(_signInManagerMock.Object, _userManagerMock.Object, _tokenServiceMock.Object);
 
     }
     [Fact]
-    public void Login_ReturnsOk_WithValidUser()
+    public async void Login_ReturnsOk_WithValidUser()
     {
+        //Arrange
         var loginModel = new UserLoginModel {Email = "test", Password = "password"};
-        var result = _controller.Login(loginModel);
-        Console.WriteLine(result);
+        _signInManagerMock.Setup(s => s.PasswordSignInAsync(loginModel.Email, loginModel.Password, false, false))
+                .ReturnsAsync(SignInResult.Success);
+        _userManagerMock.Setup(u => u.FindByEmailAsync(loginModel.Email))
+                .ReturnsAsync(new IdentityUser { Email = loginModel.Email });
+        _tokenServiceMock.Setup(t => t.GenerateJwt(It.IsAny<string>()))
+                .ReturnsAsync("generatedToken");
+        //Action
+        var result = await _controller.Login(loginModel);
+        //Assert
         Assert.IsType<OkObjectResult>(result);
     }
 
     [Fact]
-    public void Login_ReturnsUnatorized_WithIvalidUser ()
+    public async void Login_ReturnsUnatorized_WithIvalidUser ()
     {
         var loginModel = new UserLoginModel {Email = "invalid", Password = "invalid"};
-        var result = _controller.Login(loginModel);
+        _signInManagerMock.Setup(s => s.PasswordSignInAsync(loginModel.Email, loginModel.Password, false, false))
+            .ReturnsAsync(SignInResult.Failed);
+
+        var result = await _controller.Login(loginModel);
+        
         Assert.IsType<UnauthorizedResult>(result);
     }
 
