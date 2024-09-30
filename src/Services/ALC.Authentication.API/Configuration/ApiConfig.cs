@@ -6,8 +6,6 @@ public static class ApiConfig
 {
     public static IServiceCollection AddApiConfiguration(this IServiceCollection services)
     {
-        // services.AddAuthorization();
-
         services.AddControllers();
 
         return services;

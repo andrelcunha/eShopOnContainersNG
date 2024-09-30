@@ -1,23 +1,17 @@
-using System;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ALC.Authentication.API.Authentication;
 
-public static class AuthConfig
+public static class JwtConfig
 {
-    public static void AddAuthConfiguration (this IServiceCollection services, IConfiguration configuration)
+    public static void AddJwtConfiguration (this IServiceCollection services, IConfiguration configuration)
     {
         var jwtSettingsSection = configuration.GetSection("JwtSettings");
         services.Configure<JwtSettings>(jwtSettingsSection);
 
-        var jwtSettings = jwtSettingsSection.Get<JwtSettings>();
-        //TODO: implement a better way to handle null setting;
-        if (jwtSettings is null)
-        {
-            throw new Exception ();
-        }
+        var jwtSettings = jwtSettingsSection.Get<JwtSettings>() ?? throw new Exception ();
         var key = Encoding.UTF8.GetBytes(jwtSettings.Key);
 
         services.AddAuthentication(option => 

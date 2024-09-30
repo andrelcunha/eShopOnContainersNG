@@ -1,5 +1,3 @@
-using System;
-
 namespace ALC.Authentication.API.Models;
 
 public class UserLoginModel
@@ -14,5 +12,3 @@ public class UserRegisterModel
     public string Password { get; set; } = string.Empty;
     public string ConfirmPassword { get; set; } = string.Empty;
 }
-
-

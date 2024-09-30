@@ -1,5 +1,3 @@
-using System;
-
 namespace ALC.Authentication.API.Configuration;
 
 public static class SwaggerConfig

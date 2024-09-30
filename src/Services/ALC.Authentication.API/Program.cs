@@ -1,5 +1,3 @@
-
-using ALC.Authentication.API.Authentication;
 using ALC.Authentication.API.Configuration;
 
 namespace ALC.Authentication.API;
@@ -11,10 +9,10 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         var configuration = builder.Configuration;
- 
-        builder.Services.AddApiConfiguration();
 
-        builder.Services.AddAuthConfiguration(configuration);
+        builder.Services.AddIdentityConfiguration(configuration);
+
+        builder.Services.AddApiConfiguration();
 
         builder.Services.AddSwaggerConfiguration();
 
