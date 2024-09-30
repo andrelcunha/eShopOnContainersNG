@@ -31,13 +31,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Docker Compose v2
-      run: |
-        sudo apt-get update
-        sudo apt-get install docker-compose-plugin
-
     - name: Set up Docker Compose
-      run: docker compose -f docker-compose.yml up -d
+      run: docker-compose -f docker-compose.yml up -d
 
     - name: Set up .NET
       uses: actions/setup-dotnet@v2
