@@ -62,7 +62,7 @@ jobs:
 
     # - name: Push Docker image
     #   run: docker push your-dockerhub-username/eshop-authentication:latest
-    -name: Build and push
+    - name: Build and push
       uses: docker/build-push-action@v6
       with:
         push: true
