@@ -51,11 +51,19 @@ jobs:
     - name: Run tests
       run: dotnet test --no-build --verbosity normal
 
-    - name: Build Docker image
-      run: docker build -t your-dockerhub-username/eshop-authentication:latest -f src/Services/ALC.Authentication.API/Dockerfile .
+    # - name: Build Docker image
+      # run: docker build -t your-dockerhub-username/eshop-authentication:latest -f src/Services/ALC.Authentication.API/Dockerfile .
 
     - name: Login to DockerHub
-      run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}"
 
-    - name: Push Docker image
-      run: docker push your-dockerhub-username/eshop-authentication:latest
+    # - name: Push Docker image
+    #   run: docker push your-dockerhub-username/eshop-authentication:latest
+    -name: Build and push
+      uses: docker/build-push-action@v6
+      with:
+        push: true
+        tags: user/app:latest
