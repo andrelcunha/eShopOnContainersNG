@@ -31,8 +31,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Set up Docker Compose v2
+      run: |
+        sudo apt-get update
+        sudo apt-get install docker-compose-plugin
+
     - name: Set up Docker Compose
-      run: docker-compose -f docker-compose.yml up -d
+      run: docker compose -f docker-compose.yml up -d
 
     - name: Set up .NET
       uses: actions/setup-dotnet@v2
@@ -44,6 +49,9 @@ jobs:
 
     - name: Build
       run: dotnet build --no-restore
+
+    - name: Apply EF Migrations
+      run: dotnet ef database update --project src/Services/ALC.Authentication.API/ALC.Authentication.API.csproj
 
     - name: Run tests
       run: dotnet test --no-build --verbosity normal
