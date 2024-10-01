@@ -1,12 +1,14 @@
 using ALC.Catalog.API.Models;
+using ALC.Core.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace ALC.Catalog.API.Data;
 
-public class CatalogContext : DbContext
+public class CatalogContext : DbContext, IUnitOfWork
 {
     public CatalogContext(DbContextOptions<CatalogContext> options) : base(options) { }
         public DbSet<Product> Products {get;set;}
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -15,5 +17,10 @@ public class CatalogContext : DbContext
             property.SetColumnType("varchar(100)");
         
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogContext).Assembly);
+    }
+
+    public async Task<bool> Commit()
+    {
+        return await base.SaveChangesAsync() > 0;
     }
 }

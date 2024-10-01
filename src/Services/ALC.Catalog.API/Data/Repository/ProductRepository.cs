@@ -1,5 +1,6 @@
 using ALC.Catalog.API.Data;
 using ALC.Catalog.API.Models;
+using ALC.Core.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace ALC.Catalog.API.Repository;
@@ -7,6 +8,8 @@ namespace ALC.Catalog.API.Repository;
 public class ProductRepository: IProductRepository
 {
     private readonly CatalogContext _context;
+
+    public IUnitOfWork UnitOfWork => _context;
 
     public ProductRepository(CatalogContext catalog)
     {
@@ -45,5 +48,10 @@ public class ProductRepository: IProductRepository
             _context.Products.Update(product);
             await _context.SaveChangesAsync();
         }
+    }
+
+    public void Dispose()
+    {
+        _context?.Dispose();
     }
 }
