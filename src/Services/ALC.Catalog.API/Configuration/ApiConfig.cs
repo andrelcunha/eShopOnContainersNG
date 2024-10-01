@@ -12,6 +12,14 @@ public static class ApiConfig
 
         services.AddControllers();
 
+        services.AddCors(options =>
+            options.AddPolicy("Total", 
+                builder => 
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()));
+
         services.AddDependencyInjectionConfiguration();
     }
 
