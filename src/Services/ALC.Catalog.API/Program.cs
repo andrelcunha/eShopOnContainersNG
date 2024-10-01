@@ -9,7 +9,9 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddApiConfiguration();
+        var configuration = builder.Configuration;
+
+        builder.Services.AddApiConfiguration(configuration);
 
         builder.Services.AddSwaggerConfiguration();
 
