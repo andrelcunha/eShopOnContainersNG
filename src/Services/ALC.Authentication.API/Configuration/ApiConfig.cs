@@ -13,7 +13,6 @@ public static class ApiConfig
 
     public static IApplicationBuilder UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
     {
-        // Configure the HTTP request pipeline.
         if (env.IsDevelopment())
         {
             app.UseSwaggerConfiguration();
