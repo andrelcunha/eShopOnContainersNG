@@ -1,44 +1,45 @@
 using ALC.Catalog.API.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace ALC.Catalog.API.Configuration;
-
-public static class ApiConfig
+namespace ALC.Catalog.API.Configuration
 {
-    public static void AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
+    public static class ApiConfig
     {
-        services.AddDbContext<CatalogContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
-
-        services.AddControllers();
-
-        services.AddCors(options =>
-            options.AddPolicy("Total", 
-                builder => 
-                    builder
-                        .AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()));
-
-        services.RegisterServices();
-    }
-
-    public static void UseApiConfiguration(this IApplicationBuilder app, IHostEnvironment env)
-    {
-        if (env.IsDevelopment())
+        public static void AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            app.UseSwaggerConfiguration();
+            services.AddDbContext<CatalogContext>(options =>
+                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddControllers();
+
+            services.AddCors(options =>
+                options.AddPolicy("Total", 
+                    builder => 
+                        builder
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()));
+
+            services.RegisterServices();
         }
 
-        app.UseHttpsRedirection();
-
-        app.UseRouting();
-
-        app.UseAuthorization();
-
-        app.UseEndpoints( endpoint => 
+        public static void UseApiConfiguration(this IApplicationBuilder app, IHostEnvironment env)
         {
-            endpoint.MapControllers();
-        });
+            if (env.IsDevelopment())
+            {
+                app.UseSwaggerConfiguration();
+            }
+
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints( endpoint => 
+            {
+                endpoint.MapControllers();
+            });
+        }
     }
 }

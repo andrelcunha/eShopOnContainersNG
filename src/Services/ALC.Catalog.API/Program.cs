@@ -1,27 +1,31 @@
 
 using ALC.Catalog.API.Configuration;
+using ALC.WebAPI.Core.Identidade;
 
-namespace ALC.Catalog.API;
-
-public class Program
+namespace ALC.Catalog.API
 {
-    public static void Main(string[] args)
+    public class Program
     {
-        var builder = WebApplication.CreateBuilder(args);
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
 
-        var configuration = builder.Configuration;
+            var configuration = builder.Configuration;
 
-        builder.Services.AddApiConfiguration(configuration);
+            builder.Services.AddApiConfiguration(configuration);
 
-        builder.Services.AddSwaggerConfiguration();
+            builder.Services.AddJwtConfiguration(configuration);
 
-        var app = builder.Build();
-        var env =  app.Environment;
+            builder.Services.AddSwaggerConfiguration();
 
-        app.UseMigration();
+            var app = builder.Build();
+            var env =  app.Environment;
 
-        app.UseApiConfiguration(env);    
+            app.UseMigration();
+
+            app.UseApiConfiguration(env);    
   
-        app.Run();
+            app.Run();
+        }
     }
 }

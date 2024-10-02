@@ -2,58 +2,58 @@ using ALC.Authentication.API.Models;
 using ALC.Authentication.API.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
-namespace ALC.Authentication.API.Controllers;
-
-[Route("api/authentication")]
-[ApiController]
-public class AuthController : ControllerBase
+namespace ALC.Authentication.API.Controllers
 {
-    private readonly SignInManager<IdentityUser> _signInManager;
-    private readonly UserManager<IdentityUser> _userManager;
-    private readonly ITokenService _tokenService;
-    public AuthController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, ITokenService tokenService)
+    [Route("api/authentication")]
+    [ApiController]
+    public class AuthController : ControllerBase
     {
-        _signInManager = signInManager;
-        _userManager = userManager;
-        _tokenService = tokenService;
-    }
-
-    [HttpPost("register")]
-    public async Task<IActionResult> Register(UserRegisterModel userRegister)
-    {
-        var user = new IdentityUser
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly ITokenService _tokenService;
+        public AuthController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, ITokenService tokenService)
         {
-            UserName = userRegister.Email,
-            Email = userRegister.Email,
-            EmailConfirmed = userRegister.Email.Equals(userRegister.ConfirmPassword)
-        };
+            _signInManager = signInManager;
+            _userManager = userManager;
+            _tokenService = tokenService;
+        }
 
-        var result = await _userManager.CreateAsync(user, userRegister.Password);
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(UserRegisterModel userRegister)
+        {
+            var user = new IdentityUser
+            {
+                UserName = userRegister.Email,
+                Email = userRegister.Email,
+                EmailConfirmed = userRegister.Email.Equals(userRegister.ConfirmPassword)
+            };
+
+            var result = await _userManager.CreateAsync(user, userRegister.Password);
         
-        if(!result.Succeeded)
-            return BadRequest(result.Errors);
+            if(!result.Succeeded)
+                return BadRequest(result.Errors);
 
-        var token = await _tokenService.GenerateJwt(userRegister.Email);
-        if (string.IsNullOrEmpty(token))
-        {
-            var errorResponse = new {message = "An error occurred while processing your request"};
-            return StatusCode(500, errorResponse);
+            var token = await _tokenService.GenerateJwt(userRegister.Email);
+            if (string.IsNullOrEmpty(token))
+            {
+                var errorResponse = new {message = "An error occurred while processing your request"};
+                return StatusCode(500, errorResponse);
+            }
+            return Ok(token);
         }
-        return Ok(token);
-    }
 
-    [HttpPost("login")]
-    public async Task<IActionResult> Login(UserLoginModel userLogin)
-    {
-        var result = await _signInManager.PasswordSignInAsync(userLogin.Email, userLogin.Password, false, false);
-
-        if (result.Succeeded)
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(UserLoginModel userLogin)
         {
-            var token = await _tokenService.GenerateJwt(userLogin.Email);
-            return Ok(new { token });
+            var result = await _signInManager.PasswordSignInAsync(userLogin.Email, userLogin.Password, false, false);
+
+            if (result.Succeeded)
+            {
+                var token = await _tokenService.GenerateJwt(userLogin.Email);
+                return Ok(new { token });
+            }
+            return Unauthorized();
         }
-        return Unauthorized();
     }
 }

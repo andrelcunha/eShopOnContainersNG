@@ -1,35 +1,36 @@
 using ALC.WebAPI.Core.Identidade;
 
-namespace ALC.Authentication.API.Configuration;
-
-public static class ApiConfig
+namespace ALC.Authentication.API.Configuration
 {
-    public static IServiceCollection AddApiConfiguration(this IServiceCollection services)
+    public static class ApiConfig
     {
-        services.AddControllers();
-
-        return services;
-    }
-
-    public static IApplicationBuilder UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
-    {
-        if (env.IsDevelopment())
+        public static IServiceCollection AddApiConfiguration(this IServiceCollection services)
         {
-            app.UseSwaggerConfiguration();
+            services.AddControllers();
+
+            return services;
         }
 
-        app.UseHttpsRedirection();
-
-        app.UseRouting();
-
-        app.UseAuthConfiguration();
-
-        app.UseEndpoints(endpoints =>
+        public static IApplicationBuilder UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
         {
-            endpoints.MapControllers();
-        });
+            if (env.IsDevelopment())
+            {
+                app.UseSwaggerConfiguration();
+            }
 
-        return app;
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseAuthConfiguration();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
+            return app;
+        }
+
     }
-
 }

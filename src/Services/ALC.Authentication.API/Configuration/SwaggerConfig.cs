@@ -1,18 +1,19 @@
-namespace ALC.Authentication.API.Configuration;
-
-public static class SwaggerConfig
+namespace ALC.Authentication.API.Configuration
 {
-    public static IServiceCollection AddSwaggerConfiguration(this IServiceCollection services)
+    public static class SwaggerConfig
     {
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
-        return services;
-    }
+        public static IServiceCollection AddSwaggerConfiguration(this IServiceCollection services)
+        {
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen();
+            return services;
+        }
 
-    public static IApplicationBuilder UseSwaggerConfiguration (this IApplicationBuilder app)
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-        return app;
+        public static IApplicationBuilder UseSwaggerConfiguration (this IApplicationBuilder app)
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+            return app;
+        }
     }
 }

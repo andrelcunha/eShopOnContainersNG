@@ -1,13 +1,13 @@
-using System;
 using ALC.Authentication.API.Services;
 
-namespace ALC.Authentication.API.Configuration;
-
-public static class DependencyInjectionConfig
+namespace ALC.Authentication.API.Configuration
 {
-    public static IServiceCollection RegisterSerives(this IServiceCollection services)
+    public static class DependencyInjectionConfig
     {
-        services.AddScoped<ITokenService, TokenService>();
-        return services;
+        public static IServiceCollection RegisterSerives(this IServiceCollection services)
+        {
+            services.AddScoped<ITokenService, TokenService>();
+            return services;
+        }
     }
 }

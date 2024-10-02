@@ -1,31 +1,31 @@
 using ALC.Authentication.API.Configuration;
-using ALC.Authentication.API.Services;
 
-namespace ALC.Authentication.API;
-
-public class Program
+namespace ALC.Authentication.API
 {
-    public static void Main(string[] args)
+    public class Program
     {
-        var builder = WebApplication.CreateBuilder(args);
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
 
-        var configuration = builder.Configuration;
+            var configuration = builder.Configuration;
 
-        builder.Services.RegisterSerives();
+            builder.Services.RegisterSerives();
 
-        builder.Services.AddIdentityConfiguration(configuration);
+            builder.Services.AddIdentityConfiguration(configuration);
 
-        builder.Services.AddApiConfiguration();
+            builder.Services.AddApiConfiguration();
 
-        builder.Services.AddSwaggerConfiguration();
+            builder.Services.AddSwaggerConfiguration();
 
-        var app = builder.Build();
-        var env =  app.Environment;
+            var app = builder.Build();
+            var env =  app.Environment;
 
-        app.UseMigration();
+            app.UseMigration();
 
-        app.UseApiConfiguration(env);
+            app.UseApiConfiguration(env);
 
-        app.Run();
+            app.Run();
+        }
     }
 }

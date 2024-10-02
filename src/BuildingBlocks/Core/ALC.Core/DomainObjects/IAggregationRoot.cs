@@ -1,6 +1,7 @@
-namespace ALC.Core.DomainObjects;
-
-public interface IAggregationRoot
+namespace ALC.Core.DomainObjects
 {
+    public interface IAggregationRoot
+    {
 
+    }
 }

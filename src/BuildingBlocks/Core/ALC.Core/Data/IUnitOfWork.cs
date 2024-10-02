@@ -1,8 +1,7 @@
-using System;
-
-namespace ALC.Core.Data;
-
-public interface IUnitOfWork
+namespace ALC.Core.Data
 {
-    Task<bool> Commit();
+    public interface IUnitOfWork
+    {
+        Task<bool> Commit();
+    }
 }

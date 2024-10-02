@@ -1,30 +1,33 @@
 using ALC.Catalog.API.Models;
 using ALC.Catalog.API.Repository;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ALC.Catalog.API.Controllers;
-
-[Route("api/[controller]")]
-[ApiController]
-public class CatalogController : ControllerBase
+namespace ALC.Catalog.API.Controllers
 {
-    private readonly IProductRepository _repository;
-    public CatalogController(IProductRepository repository)
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
+    public class CatalogController : ControllerBase
     {
-        _repository = repository;
+        private readonly IProductRepository _repository;
+        public CatalogController(IProductRepository repository)
+        {
+            _repository = repository;
+        }
+
+        [AllowAnonymous]
+        [HttpGet("/products")]
+        public async Task<IEnumerable<Product>> GetAll()
+        {
+            return await _repository.GetProducts();
+        }
+
+        [HttpGet("/products/{id}")]
+        public async Task<Product> Get(int id)
+        {
+            return await _repository.GetProduct(id);
+        }
     }
 
-    [HttpGet("/products")]
-    public async Task<IEnumerable<Product>> GetAll()
-    {
-        return await _repository.GetProducts();
-    }
-
-    [HttpGet("/products/{id}")]
-    public async Task<Product> Get(int id)
-    {
-        return await _repository.GetProduct(id);
-    }
 }
-

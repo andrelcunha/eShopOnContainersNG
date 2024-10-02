@@ -3,21 +3,22 @@ using ALC.WebAPI.Core.Identidade;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace ALC.Authentication.API.Configuration;
-
-public static class IdentityConfig
+namespace ALC.Authentication.API.Configuration
 {
-    public static IServiceCollection AddIdentityConfiguration(this IServiceCollection services, IConfiguration configuration)
+    public static class IdentityConfig
     {
-        services.AddDbContext<AuthDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+        public static IServiceCollection AddIdentityConfiguration(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddDbContext<AuthDbContext>(options =>
+                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
         
-        services.AddIdentity<IdentityUser, IdentityRole>()
-            .AddEntityFrameworkStores<AuthDbContext>()
-            .AddDefaultTokenProviders();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<AuthDbContext>()
+                .AddDefaultTokenProviders();
         
-        services.AddJwtConfiguration(configuration);
+            services.AddJwtConfiguration(configuration);
 
-        return services;
+            return services;
+        }
     }
 }

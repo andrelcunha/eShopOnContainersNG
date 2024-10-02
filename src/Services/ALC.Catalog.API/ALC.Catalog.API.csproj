@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\BuildingBlocks\Core\ALC.Core\ALC.Core.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\services\ALC.WebAPI.Core\ALC.WebAPI.Core.csproj" />
   </ItemGroup>
 
 </Project>

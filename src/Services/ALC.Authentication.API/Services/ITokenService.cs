@@ -1,6 +1,7 @@
-namespace ALC.Authentication.API.Services;
-
-public interface ITokenService
+namespace ALC.Authentication.API.Services
 {
-    Task<string> GenerateJwt(string email);
+    public interface ITokenService
+    {
+        Task<string> GenerateJwt(string email);
+    }
 }
