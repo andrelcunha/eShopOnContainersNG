@@ -23,13 +23,17 @@ public class TokenService:ITokenService
     public async Task<string> GenerateJwt(string email)
     {
         var user = await _userManager.FindByEmailAsync(email);
-        var claims = await _userManager.GetClaimsAsync(user);
+        if (user is not null)
+        {
+            var claims = await _userManager.GetClaimsAsync(user);
 
-        // var identityClaims = new ClaimsIdentity();
-        
-        var identityClaims = await GetUserClaims(claims, user);
-        var token =  EncodeJwt(identityClaims);
-        return token;
+            // var identityClaims = new ClaimsIdentity();
+            
+            var identityClaims = await GetUserClaims(claims, user);
+            var token =  EncodeJwt(identityClaims);
+            return token;
+        }
+        return string.Empty;
     }
 
     private async Task<ClaimsIdentity> GetUserClaims(ICollection<Claim> claims, IdentityUser user)
@@ -37,7 +41,7 @@ public class TokenService:ITokenService
         var userRoles = await _userManager.GetRolesAsync(user);
         
         claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
-        claims.Add(new(JwtRegisteredClaimNames.Email, user.Email));
+        claims.Add(new(JwtRegisteredClaimNames.Email, user.Email ?? string.Empty));
         claims.Add(new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
         claims.Add(new(JwtRegisteredClaimNames.Nbf, ToUnixEpochDate(DateTime.UtcNow).ToString()));
         claims.Add(new(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(DateTime.UtcNow).ToString(), ClaimValueTypes.Integer64));

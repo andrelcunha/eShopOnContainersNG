@@ -36,7 +36,11 @@ public class AuthController : ControllerBase
             return BadRequest(result.Errors);
 
         var token = await _tokenService.GenerateJwt(userRegister.Email);
-        
+        if (string.IsNullOrEmpty(token))
+        {
+            var errorResponse = new {message = "An error occurred while processing your request"};
+            return StatusCode(500, errorResponse);
+        }
         return Ok(token);
     }
 
