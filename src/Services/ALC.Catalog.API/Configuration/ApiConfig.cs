@@ -20,7 +20,7 @@ public static class ApiConfig
                         .AllowAnyMethod()
                         .AllowAnyHeader()));
 
-        services.AddDependencyInjectionConfiguration();
+        services.RegisterServices();
     }
 
     public static void UseApiConfiguration(this IApplicationBuilder app, IHostEnvironment env)

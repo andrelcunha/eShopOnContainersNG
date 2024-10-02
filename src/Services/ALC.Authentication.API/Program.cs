@@ -11,13 +11,13 @@ public class Program
 
         var configuration = builder.Configuration;
 
+        builder.Services.RegisterSerives();
+
         builder.Services.AddIdentityConfiguration(configuration);
 
         builder.Services.AddApiConfiguration();
 
         builder.Services.AddSwaggerConfiguration();
-
-        builder.Services.AddScoped<ITokenService, TokenService>();
 
         var app = builder.Build();
         var env =  app.Environment;

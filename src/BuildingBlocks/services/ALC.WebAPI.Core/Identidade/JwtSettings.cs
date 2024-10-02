@@ -1,4 +1,4 @@
-namespace ALC.Authentication.API.Authentication;
+namespace ALC.WebAPI.Core.Identidade;
 
 public class JwtSettings
 {

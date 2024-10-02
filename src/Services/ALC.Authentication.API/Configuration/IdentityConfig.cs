@@ -1,5 +1,5 @@
-using ALC.Authentication.API.Authentication;
 using ALC.Authentication.API.Data;
+using ALC.WebAPI.Core.Identidade;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

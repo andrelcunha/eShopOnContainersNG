@@ -1,4 +1,3 @@
-using ALC.Authentication.API.Authentication;
 using ALC.Authentication.API.Models;
 using ALC.Authentication.API.Services;
 using Microsoft.AspNetCore.Identity;
@@ -35,8 +34,10 @@ public class AuthController : ControllerBase
         
         if(!result.Succeeded)
             return BadRequest(result.Errors);
+
+        var token = await _tokenService.GenerateJwt(userRegister.Email);
         
-        return Ok(_tokenService.GenerateJwt(userRegister.Email));
+        return Ok(token);
     }
 
     [HttpPost("login")]

@@ -1,4 +1,4 @@
-using ALC.Authentication.API.Authentication;
+using ALC.WebAPI.Core.Identidade;
 
 namespace ALC.Authentication.API.Configuration;
 
