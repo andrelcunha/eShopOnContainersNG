@@ -50,6 +50,14 @@ namespace ALC.Authentication.API.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        [Route("exit")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Catalog");
+        }    
+
         private async Task ExecuteLogin(UserResponse userResponse)
         {
             //get security Token from response

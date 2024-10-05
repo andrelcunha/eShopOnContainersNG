@@ -1,4 +1,4 @@
-﻿@* @using ALC.WebApp.MVC.Extensions *@
+﻿@using ALC.WebApp.MVC.Extensions
 @model IEnumerable<ALC.WebApp.MVC.Models.ProductViewModel>
 
 @{
@@ -28,11 +28,12 @@
                                     </a>
 
                                     <small class="card-text">
+                                        @this.StockMessage(product.Stock)<br/><br/>
                                         @product.Description
                                     </small>
                                 </figcaption>
                                 <div class="card-footer price mt-1">
-                                    <h3>@product.Price</h3>
+                                    <h3>@this.FormatCurrency(product.Price)</h3>
                                 </div>
                             </div>
                         </div>
