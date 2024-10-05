@@ -51,7 +51,7 @@ namespace ALC.Authentication.API.Tests
         public async void Login_ReturnsOk_WithValidUser()
         {
             //Arrange
-            var loginModel = new UserLoginModel {Email = "test", Password = "password"};
+            var loginModel = new UserLogin {Email = "test", Password = "password"};
             _signInManagerMock.Setup(s => s.PasswordSignInAsync(loginModel.Email, loginModel.Password, false, false))
                     .ReturnsAsync(SignInResult.Success);
             _userManagerMock.Setup(u => u.FindByEmailAsync(loginModel.Email))
@@ -67,7 +67,7 @@ namespace ALC.Authentication.API.Tests
         [Fact]
         public async void Login_ReturnsUnatorized_WithIvalidUser ()
         {
-            var loginModel = new UserLoginModel {Email = "invalid", Password = "invalid"};
+            var loginModel = new UserLogin {Email = "invalid", Password = "invalid"};
             _signInManagerMock.Setup(s => s.PasswordSignInAsync(loginModel.Email, loginModel.Password, false, false))
                 .ReturnsAsync(SignInResult.Failed);
 

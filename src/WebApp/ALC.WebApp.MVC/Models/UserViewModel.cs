@@ -1,6 +1,8 @@
-namespace ALC.Authentication.API.Models
-{
-    public class UserLogin
+using System;
+
+namespace ALC.WebApp.MVC.Models;
+
+public class UserLogin
     {
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
@@ -31,4 +33,3 @@ namespace ALC.Authentication.API.Models
         public string Value { get; set; } = string.Empty;
         public string Type { get; set; } = string.Empty;
     }
-}

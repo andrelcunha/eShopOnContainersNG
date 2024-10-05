@@ -20,7 +20,7 @@ namespace ALC.Authentication.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(UserRegisterModel userRegister)
+        public async Task<IActionResult> Register(UserRegister userRegister)
         {
             var user = new IdentityUser
             {
@@ -44,7 +44,7 @@ namespace ALC.Authentication.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(UserLoginModel userLogin)
+        public async Task<IActionResult> Login(UserLogin userLogin)
         {
             var result = await _signInManager.PasswordSignInAsync(userLogin.Email, userLogin.Password, false, false);
 

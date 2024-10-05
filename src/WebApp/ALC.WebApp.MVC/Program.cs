@@ -14,6 +14,8 @@ public class Program
 
         builder.Services.AddIdentityConfig();
 
+        builder.Services.RegisterServices();
+
         var app = builder.Build();
         var env = builder.Environment;
 
