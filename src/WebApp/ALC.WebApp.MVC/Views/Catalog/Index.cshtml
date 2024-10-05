@@ -1,35 +1,44 @@
-﻿@model IEnumerable<ALC.WebApp.MVC.Models.ProductViewModel>
+﻿@* @using ALC.WebApp.MVC.Extensions *@
+@model IEnumerable<ALC.WebApp.MVC.Models.ProductViewModel>
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "All Products";
 }
-        <!-- Section-->
-        <section class="py-5">
-            <div class="container px-4 px-lg-5 mt-5">
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    @foreach (var product in Model.OrderBy(p => p.Name))
+
+<section>
+    <div>
+        <div style="background-image: url(images/banners/Template.jpg); height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover">
+            <div style="text-align: center;">
+                <img src="~/images/banners/nerdstore.png" />
+            </div>
+        </div>
+        <div class="container" style=" padding-top: 20px">
+            <div class="row">
+                @{
+                    foreach (var product in Model.OrderBy(p=>p.Name))
                     {
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="~/images/products/@product.ImageUrl" alt="@product.Name" />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">@product.Name</h5>
-                                    <!-- Product price-->
-                                    @product.Price.ToString("C")
+                        <div class="col-md-3">
+                            <div href="#" class="card card-product-grid">
+                                <a asp-controller="Catalog" asp-action="ProductDetails" asp-route-id="@product.Id" class="img-wrap">
+                                    <img src="~/images/products/@product.ImageUrl" alt="@product.Name">
+                                </a>
+                                <figcaption class="info-wrap">
+                                    <a asp-controller="Catalog" asp-action="ProductDetails" asp-route-id="@product.Id" class="title">
+                                        <b> @product.Name</b>
+                                    </a>
+
+                                    <small class="card-text">
+                                        @product.Description
+                                    </small>
+                                </figcaption>
+                                <div class="card-footer price mt-1">
+                                    <h3>@product.Price)</h3>
                                 </div>
                             </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
-                            </div>
                         </div>
-                    </div>
                     }
-                    
-                </div>
+                }
             </div>
-        </section>
-
+        </div>
+    </div>
+</section>
