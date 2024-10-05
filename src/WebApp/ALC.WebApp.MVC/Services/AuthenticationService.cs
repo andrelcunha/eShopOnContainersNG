@@ -21,27 +21,16 @@ public class AuthenticationService : Service, IAuthenticationService
 
         var response = await _httpClient.PostAsync("login", content);
 
-        string json = await response.Content.ReadAsStringAsync();
-
-        Console.WriteLine(json);
-        return DeserializeResponseObject<UserResponse>(json);
+   
+        return await DeserializeResponseObject<UserResponse>(response);
     }
 
     public async Task<UserResponse> Register(UserRegister userRegister)
     {
-        var content = new StringContent(
-            JsonSerializer.Serialize(userRegister),
-            System.Text.Encoding.UTF8,
-            "application/json"
-        );
+        var content = GetContent(userRegister);
 
         var response = await _httpClient.PostAsync("register", content);
 
-        var options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        };
-
-        return JsonSerializer.Deserialize<UserResponse>(await response.Content.ReadAsStringAsync(), options);
+        return await DeserializeResponseObject<UserResponse>(response);
     }
 }

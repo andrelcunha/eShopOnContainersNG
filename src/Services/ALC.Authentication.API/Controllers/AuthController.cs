@@ -35,7 +35,7 @@ namespace ALC.Authentication.API.Controllers
                 return BadRequest(result.Errors);
 
             var token = await _tokenService.GenerateJwt(userRegister.Email);
-            if (string.IsNullOrEmpty(token))
+            if (token is null)
             {
                 var errorResponse = new {message = "An error occurred while processing your request"};
                 return StatusCode(500, errorResponse);
@@ -51,7 +51,7 @@ namespace ALC.Authentication.API.Controllers
             if (result.Succeeded)
             {
                 var token = await _tokenService.GenerateJwt(userLogin.Email);
-                return Ok(new { token });
+                return Ok( token );
             }
             return Unauthorized();
         }

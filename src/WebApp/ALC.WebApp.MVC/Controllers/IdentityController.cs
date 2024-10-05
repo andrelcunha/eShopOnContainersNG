@@ -1,6 +1,10 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using ALC.WebApp.MVC.Models;
-using ALC.WebApp.MVC.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using IAuthenticationService = ALC.WebApp.MVC.Services.IAuthenticationService;
 
 namespace ALC.Authentication.API.Controllers
 {
@@ -26,9 +30,38 @@ namespace ALC.Authentication.API.Controllers
         public async Task<ActionResult> Login(UserLogin user)
         {
             var response = await _authenticationService.Login(user);
-            
-            return View();
+            await ExecuteLogin(response);
+            return RedirectToAction("Index", "Home");
         }
 
+        private async Task ExecuteLogin(UserResponse userResponse)
+        {
+            //get security Token from response
+            JwtSecurityToken token = GetFormatedToken(userResponse.AccessToken);
+
+            //get user claims
+            var claims = new List<Claim>();
+            //add token as claim
+            claims.Add(new Claim("JWT", userResponse.AccessToken));
+            //add other claims
+
+            //set claims identity instance with claims and cookie auth type
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            //set auth properties: expiration utc and persistence
+            var authProperties = new AuthenticationProperties
+            {
+                ExpiresUtc = DateTime.UtcNow.AddMinutes(60),
+                IsPersistent = true
+            };
+            //sign in at httpContext with cookie set, auth schema and claims
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity),
+                authProperties);
+        }
+
+        private static JwtSecurityToken GetFormatedToken(string jwtToken) 
+            => new JwtSecurityTokenHandler().ReadJwtToken(jwtToken);
     }
 }

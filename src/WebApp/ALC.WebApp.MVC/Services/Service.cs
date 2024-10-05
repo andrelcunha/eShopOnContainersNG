@@ -14,8 +14,10 @@ public abstract class Service
         );
     }
 
-    protected static T? DeserializeResponseObject<T>(string json)
+    protected async Task<T> DeserializeResponseObject<T>(HttpResponseMessage response)
     {
+        string json = await response.Content.ReadAsStringAsync();
+
         var options = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
