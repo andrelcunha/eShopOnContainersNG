@@ -18,14 +18,14 @@ namespace ALC.Catalog.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("/products")]
+        [HttpGet("products")]
         public async Task<IEnumerable<Product>> GetAll()
         {
             return await _repository.GetProducts();
         }
 
         [ClaimsAuthorize("Catalog","Read")]
-        [HttpGet("/products/{id}")]
+        [HttpGet("products/{id}")]
         public async Task<Product> Get(int id)
         {
             return await _repository.GetProduct(id);
