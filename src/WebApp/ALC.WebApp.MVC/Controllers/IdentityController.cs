@@ -17,6 +17,22 @@ namespace ALC.Authentication.API.Controllers
             _authenticationService = authenticationService;
         }
 
+        [HttpGet]
+        [Route("new-account")]
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("new-account")]
+        public async Task<ActionResult> Register(UserRegister userRegister)
+        {
+            var response = await _authenticationService.Register(userRegister);
+            await ExecuteLogin(response);
+            return RedirectToAction("Index", "Catalog");
+        }
+
         // GET: Authentication
         [HttpGet]
         [Route("login")]

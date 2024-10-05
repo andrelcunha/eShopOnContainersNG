@@ -6,26 +6,47 @@ namespace ALC.WebApp.MVC.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    [Route("system-unavailable")]
+    public IActionResult SystemUnavailable()
     {
-        _logger = logger;
+        var modelError = new ErrorViewModel
+        {
+            Message = "The system is temporarily unavailable, this can occur due to high traffic or maintenance.",
+            Title = "System unavailable",
+            ErroCode = 500
+        };
+
+        return View("Error", modelError);
     }
 
-    // public IActionResult Index()
-    // {
-    //     return View();
-    // }
-
-    public IActionResult Privacy()
+    [Route("error/{id:length(3,3)}")]
+    public IActionResult Error(int id)
     {
-        return View();
-    }
+        var modelError = new ErrorViewModel();
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        if (id == 500)
+        {
+            modelError.Message = "An error has occurred! Please try again later or contact our support.";
+            modelError.Title = "An error has occurred!";
+            modelError.ErroCode = id;
+        }
+        else if (id == 404)
+        {
+            modelError.Message = "The page you are looking for does not exist! <br />If you have any questions please contact our support.";
+            modelError.Title = "Ops! Page not found.";
+            modelError.ErroCode = id;
+        }
+        else if (id == 403)
+        {
+            modelError.Message = "You are not allowed to do this.";
+            modelError.Title = "Access denied";
+            modelError.ErroCode = id;
+        }
+        else
+        {
+            return StatusCode(404);
+        }
+
+        return View("Error", modelError);
     }
 }

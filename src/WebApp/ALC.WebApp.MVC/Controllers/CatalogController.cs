@@ -21,5 +21,13 @@ namespace ALC.WebApp.MVC.Controllers
             return View(products);
         }
 
+        [HttpGet]
+        [Route("product-details/{id}")]
+        public async Task<ActionResult> ProductDetails(int id)
+        {
+            var product = await _catalogService.GetById(id);
+            return View(product);
+        }
+
     }
 }
