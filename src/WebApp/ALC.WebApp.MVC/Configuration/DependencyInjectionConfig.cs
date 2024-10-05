@@ -8,5 +8,6 @@ public static class DependencyInjectionConfig
     public static void RegisterServices(this IServiceCollection services)
     {
         services.AddHttpClient<IAuthenticationService, AuthenticationService>();
+        services.AddHttpClient<ICatalogService, CatalogService>();
     }
 }
