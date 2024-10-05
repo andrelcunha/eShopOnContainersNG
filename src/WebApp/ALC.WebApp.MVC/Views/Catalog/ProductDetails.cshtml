@@ -31,8 +31,8 @@
                                 <i class="fa fa-star"></i>
                             </li>
                         </ul>
-                        <small class="label-rating text-muted">132 avaliações</small>
-                        <small class="label-rating text-success"> <i class="fa fa-clipboard-check"></i> 154 peças vendidas</small>
+                        <small class="label-rating text-muted">132 avaliations</small>
+                        <small class="label-rating text-success"> <i class="fa fa-clipboard-check"></i> 154 pieces sold</small>
                     </div>
 
                     <div class="mb-3">
@@ -44,34 +44,32 @@
 
                     <hr>
 
-                    @{
-                        if (Model.Stock > 0)
-                        {
-                            <div class="form-row">
-                                <div class="form-group col-md flex-grow-0">
-                                    <label>Quantidade</label>
-                                    <div class="input-group input-spinner">
-                                        <select class="form-control">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
-                                    </div>
-                                </div>
-
+                    @if (Model.Stock > 0)
+                    {
+                    <div class="form-row">
+                        <div class="form-group col-md flex-grow-0">
+                            <label>Quantity</label>
+                            <div class="input-group input-spinner">
+                                <select class="form-control">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
                             </div>
-                            <br />
-                            <a href="#" class="btn  btn-outline-primary">
-                                <span class="text">Adicionar ao carrinho</span> <i class="fas fa-shopping-cart"> &nbsp;</i>
-                            </a>
+                        </div>
 
-                        }
+                    </div>
+                    <br />
+                    <a href="#" class="btn  btn-outline-primary">
+                        <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"> &nbsp;</i>
+                    </a>
                     }
                     
+                    
                     <a asp-action="Index" class="btn  btn-info">
-                        <span class="text">Voltar</span>
+                        <span class="text">Back</span>
                     </a>
                 </article>
             </main>

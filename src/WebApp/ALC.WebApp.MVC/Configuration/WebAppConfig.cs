@@ -27,6 +27,8 @@ public static class WebAppConfig
 
         app.UseIdentityConfig();
 
+        app.UseLocaleConfig();
+
         app.UseEndpoints(c =>
             c.MapControllerRoute(
                 name: "default",
