@@ -1,12 +1,14 @@
 using System;
+using ALC.WebApp.MVC.Extensions;
 
 namespace ALC.WebApp.MVC.Configuration;
 
 public static class WebAppConfig
 {
-    public static void AddMvcConfig(this IServiceCollection services)
+    public static void AddMvcConfig(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddControllersWithViews();
+        services.Configure<AppSettings>(configuration);
     }
 
     public static void UseMvcConfig(this IApplicationBuilder app, IWebHostEnvironment env)
@@ -24,7 +26,7 @@ public static class WebAppConfig
         app.UseRouting();
 
         app.UseIdentityConfig();
-        
+
         app.UseEndpoints(c =>
             c.MapControllerRoute(
                 name: "default",

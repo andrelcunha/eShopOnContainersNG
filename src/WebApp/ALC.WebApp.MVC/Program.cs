@@ -10,7 +10,7 @@ public class Program
 
         var configuration = builder.Configuration;
 
-        builder.Services.AddMvcConfig();
+        builder.Services.AddMvcConfig(configuration);
 
         builder.Services.AddIdentityConfig();
 
