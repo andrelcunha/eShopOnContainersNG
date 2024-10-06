@@ -1,4 +1,3 @@
-using System;
 using ALC.WebApp.MVC.Extensions;
 
 namespace ALC.WebApp.MVC.Configuration;
@@ -13,10 +12,14 @@ public static class WebAppConfig
 
     public static void UseMvcConfig(this IApplicationBuilder app, IWebHostEnvironment env)
     {
-          if (!env.IsDevelopment())
+        if (env.IsDevelopment())
         {
-            app.UseExceptionHandler("/Home/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+            app.UseDeveloperExceptionPage();
+        }
+        else
+        {
+            app.UseExceptionHandler("/error/500");
+            app.UseStatusCodePagesWithRedirects("/error/{0}");
             app.UseHsts();
         }
 
@@ -28,6 +31,8 @@ public static class WebAppConfig
         app.UseIdentityConfig();
 
         app.UseLocaleConfig();
+
+        app.UseMiddleware<ExceptionMiddleware>();
 
         app.UseEndpoints(c =>
             c.MapControllerRoute(

@@ -10,9 +10,9 @@ public class Program
 
         var configuration = builder.Configuration;
 
-        builder.Services.AddMvcConfig(configuration);
-
         builder.Services.AddIdentityConfig();
+
+        builder.Services.AddMvcConfig(configuration);
 
         builder.Services.RegisterServices();
 
