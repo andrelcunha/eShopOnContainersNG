@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using Polly.CircuitBreaker;
 
 namespace ALC.WebApp.MVC.Extensions;
 
@@ -20,11 +21,20 @@ public class ExceptionMiddleware
         }
         catch (CustomHttpRequestException ex)
         {
-            HandleExceptionAsync(httpContext, ex.StatusCode);
+            HandleRequestExceptionAsync(httpContext, ex.StatusCode);
+        }
+        catch (BrokenCircuitException)
+        {
+            HandleCircuitBreakerExceptionAsync(httpContext);
         }
     }
 
-    private void HandleExceptionAsync(HttpContext context, HttpStatusCode statusCode)
+    private void HandleCircuitBreakerExceptionAsync(HttpContext context)
+    {
+        context.Response.Redirect("/system-unavailable");
+    }
+
+    private void HandleRequestExceptionAsync(HttpContext context, HttpStatusCode statusCode)
     {
         if (statusCode == HttpStatusCode.Unauthorized)
         {
