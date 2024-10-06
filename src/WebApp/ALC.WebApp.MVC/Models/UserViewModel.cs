@@ -35,6 +35,7 @@ public class UserResponse
     public string AccessToken { get; set; } = string.Empty;
     public double ExpiresIn { get; set; }
     public UserToken UserToken { get; set; } = new UserToken();
+    public ResponseResult ResponseResult { get; set; } = new ResponseResult();
 }
 public class UserToken
 {

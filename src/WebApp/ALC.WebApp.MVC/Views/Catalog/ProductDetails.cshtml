@@ -1,4 +1,4 @@
-﻿@* @using ALC.WebApp.MVC.Extensions; *@
+﻿@using ALC.WebApp.MVC.Extensions
 @model ALC.WebApp.MVC.Models.ProductViewModel
 @{
     ViewData["Title"] = Model.Name;
@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <var class="price h4">@Model.Price</var>
+                        <var class="price h4">@this.FormatCurrency(Model.Price)</var>
                     </div>
 
                     <h5>@Model.Description</h5><br />

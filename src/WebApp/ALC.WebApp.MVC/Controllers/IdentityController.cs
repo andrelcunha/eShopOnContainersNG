@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using ALC.WebApp.MVC.Controllers;
 using ALC.WebApp.MVC.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -8,7 +9,7 @@ using IAuthenticationService = ALC.WebApp.MVC.Services.IAuthenticationService;
 
 namespace ALC.Authentication.API.Controllers
 {
-    public class IdentityController : Controller
+    public class IdentityController : MainController
     {
         private readonly IAuthenticationService _authenticationService;
 
@@ -19,7 +20,7 @@ namespace ALC.Authentication.API.Controllers
 
         [HttpGet]
         [Route("new-account")]
-        public ActionResult Register()
+        public IActionResult Register()
         {
             return View();
         }
@@ -28,23 +29,31 @@ namespace ALC.Authentication.API.Controllers
         [Route("new-account")]
         public async Task<ActionResult> Register(UserRegister userRegister)
         {
+            if (!ModelState.IsValid) return View(userRegister);
+
             var response = await _authenticationService.Register(userRegister);
+
+            if(ResponseHasErrors(response.ResponseResult)) return View(userRegister);
+
             await ExecuteLogin(response);
+
             return RedirectToAction("Index", "Catalog");
         }
 
         // GET: Authentication
         [HttpGet]
         [Route("login")]
-        public ActionResult Login()
+        public ActionResult Login(string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult> Login(UserLogin user)
+        public async Task<ActionResult> Login(UserLogin user, string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             var response = await _authenticationService.Login(user);
             await ExecuteLogin(response);
             return RedirectToAction("Index", "Home");
