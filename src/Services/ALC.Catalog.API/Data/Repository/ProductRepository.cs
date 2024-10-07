@@ -39,17 +39,6 @@ namespace ALC.Catalog.API.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteProduct(Guid id)
-        {
-            var product =  await _context.Products.FindAsync(id);
-            if(product is not null)
-            {
-                product.Active = false;
-                _context.Products.Update(product);
-                await _context.SaveChangesAsync();
-            }
-        }
-
         public void Dispose()
         {
             _context?.Dispose();

@@ -1,5 +1,6 @@
 
 using ALC.Customers.API.Configuration;
+using ALC.WebAPI.Core.Identidade;
 
 namespace ALC.Customers.API;
 
@@ -11,6 +12,10 @@ public class Program
         var configuration = builder.Configuration;
 
         builder.Services.AddApiConfiguration(configuration);
+
+        builder.Services.AddJwtConfiguration(configuration);
+
+        builder.Services.AddSwaggerConfiguration();
 
         builder.Services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssemblyContaining<Program>());

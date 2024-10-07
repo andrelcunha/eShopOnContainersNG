@@ -9,6 +9,5 @@ namespace ALC.Catalog.API.Repository
         Task<Product?> GetProduct(Guid id);
         Task AddProduct(Product product);
         Task UpdateProduct(Product product);
-        Task DeleteProduct(Guid id);
     }
 }

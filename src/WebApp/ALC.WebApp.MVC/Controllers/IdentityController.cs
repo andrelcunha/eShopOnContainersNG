@@ -54,6 +54,7 @@ namespace ALC.Authentication.API.Controllers
         public async Task<IActionResult> Login(UserLogin user, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            
             if (!ModelState.IsValid) return View(user);
             
             var response = await _authenticationService.Login(user);

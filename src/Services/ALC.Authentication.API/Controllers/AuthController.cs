@@ -7,7 +7,7 @@ namespace ALC.Authentication.API.Controllers
 {
     [Route("api/authentication")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController : MainController
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
@@ -51,7 +51,7 @@ namespace ALC.Authentication.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserLogin userLogin)
         {
-            var result = await _signInManager.PasswordSignInAsync(userLogin.Email, userLogin.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(userLogin.Email, userLogin.Password, false, true);
 
             if (result.Succeeded)
             {

@@ -1,4 +1,5 @@
 using ALC.Customers.API.Data;
+using ALC.WebAPI.Core.Identidade;
 using Microsoft.EntityFrameworkCore;
 
 namespace ALC.Customers.API.Configuration;
@@ -27,15 +28,14 @@ public static class ApiConfig
     {
         if (env.IsDevelopment())
         {
-            app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwaggerConfiguration();
         }
 
         app.UseHttpsRedirection();
 
         app.UseCors("Total");
 
-        app.UseAuthorization();
+        app.UseAuthConfiguration();
 
         app.UseEndpoints(enpoints => 
         {

@@ -37,7 +37,7 @@ public static class WebAppConfig
         app.UseEndpoints(c =>
             c.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
+                pattern: "{controller=Catalog}/{action=Index}/{id?}")
         );
     }
 }

@@ -17,9 +17,9 @@ public abstract class CommandHandler
         ValidationResult.Errors.Add(new ValidationFailure(string.Empty, message));
     }
 
-    protected async Task<ValidationResult> PersistData(IUnitOfWork uow)
+    protected async Task<ValidationResult> PersistData(IUnitOfWork unitOfWork)
     {
-        if (!await uow.Commit()) 
+        if (!await unitOfWork.Commit()) 
         AddError("An error occurred while persisting data");
 
         return ValidationResult;

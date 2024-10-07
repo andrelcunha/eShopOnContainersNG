@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ALC.Catalog.API.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Initial_Catalog : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,10 +16,10 @@ namespace ALC.Catalog.API.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Description = table.Column<string>(type: "varchar(100)", nullable: false),
+                    Name = table.Column<string>(type: "varchar(250)", nullable: false),
+                    Description = table.Column<string>(type: "varchar(500)", nullable: false),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
-                    ImageUrl = table.Column<string>(type: "varchar(100)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "varchar(250)", nullable: false),
                     Active = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Stock = table.Column<int>(type: "integer", nullable: false)

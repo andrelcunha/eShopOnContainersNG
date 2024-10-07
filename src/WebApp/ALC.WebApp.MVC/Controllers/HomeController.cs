@@ -13,7 +13,7 @@ public class HomeController : Controller
         {
             Message = "The system is temporarily unavailable, this can occur due to high traffic or maintenance.",
             Title = "System unavailable",
-            ErroCode = 500
+            ErrorCode = 500
         };
 
         return View("Error", modelError);
@@ -28,19 +28,19 @@ public class HomeController : Controller
         {
             modelError.Message = "An error has occurred! Please try again later or contact our support.";
             modelError.Title = "An error has occurred!";
-            modelError.ErroCode = id;
+            modelError.ErrorCode = id;
         }
         else if (id == 404)
         {
             modelError.Message = "The page you are looking for does not exist! <br />If you have any questions please contact our support.";
             modelError.Title = "Ops! Page not found.";
-            modelError.ErroCode = id;
+            modelError.ErrorCode = id;
         }
         else if (id == 403)
         {
             modelError.Message = "You are not allowed to do this.";
             modelError.Title = "Access denied";
-            modelError.ErroCode = id;
+            modelError.ErrorCode = id;
         }
         else
         {

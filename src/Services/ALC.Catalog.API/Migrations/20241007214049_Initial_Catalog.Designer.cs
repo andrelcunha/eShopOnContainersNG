@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ALC.Catalog.API.Migrations
 {
     [DbContext(typeof(CatalogContext))]
-    [Migration("20241006174055_Initial")]
-    partial class Initial
+    [Migration("20241007214049_Initial_Catalog")]
+    partial class Initial_Catalog
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,15 +39,15 @@ namespace ALC.Catalog.API.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(500)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(250)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(250)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
@@ -57,7 +57,7 @@ namespace ALC.Catalog.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 #pragma warning restore 612, 618
         }

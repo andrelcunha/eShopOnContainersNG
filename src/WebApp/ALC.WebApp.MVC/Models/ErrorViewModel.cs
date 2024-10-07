@@ -4,7 +4,7 @@ namespace ALC.WebApp.MVC.Models
 {
     public class ErrorViewModel
     {
-        public int ErroCode { get; set; }
+        public int ErrorCode { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Message { get; set; } = string.Empty;
     }
