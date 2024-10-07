@@ -21,7 +21,7 @@ namespace ALC.Catalog.API.Repository
             return await _context.Products.AsNoTracking().ToListAsync();
         }
 
-        public async Task<Product?> GetProduct(int id)
+        public async Task<Product?> GetProduct(Guid id)
         {
             return await _context.Products.FindAsync(id);
         }
@@ -39,7 +39,7 @@ namespace ALC.Catalog.API.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteProduct(int id)
+        public async Task DeleteProduct(Guid id)
         {
             var product =  await _context.Products.FindAsync(id);
             if(product is not null)

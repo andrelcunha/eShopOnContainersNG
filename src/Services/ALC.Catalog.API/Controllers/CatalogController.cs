@@ -26,7 +26,7 @@ namespace ALC.Catalog.API.Controllers
 
         [ClaimsAuthorize("Catalog","Read")]
         [HttpGet("products/{id}")]
-        public async Task<Product> Get(int id)
+        public async Task<Product> Get(Guid id)
         {
             return await _repository.GetProduct(id);
         }

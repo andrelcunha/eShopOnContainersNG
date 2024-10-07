@@ -2,7 +2,7 @@ namespace ALC.Core.DomainObjects
 {
     public abstract class Entity
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public override bool Equals(object? obj)
         {
@@ -33,6 +33,11 @@ namespace ALC.Core.DomainObjects
         public override int GetHashCode()
         {
             return (GetType().GetHashCode() * 907) + Id.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return $"{GetType().Name} [Id={Id}]";
         }
 
     }

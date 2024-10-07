@@ -6,9 +6,9 @@ namespace ALC.Catalog.API.Repository
     public interface IProductRepository : IRepository<Product>
     {
         Task<IEnumerable<Product>> GetProducts();
-        Task<Product?> GetProduct(int id);
+        Task<Product?> GetProduct(Guid id);
         Task AddProduct(Product product);
         Task UpdateProduct(Product product);
-        Task DeleteProduct(int id);
+        Task DeleteProduct(Guid id);
     }
 }

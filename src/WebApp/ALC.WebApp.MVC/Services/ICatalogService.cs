@@ -6,5 +6,5 @@ namespace ALC.WebApp.MVC.Services;
 public interface ICatalogService
 {
     Task<IEnumerable<ProductViewModel>> GetAll();
-    Task<ProductViewModel> GetById(int id);
+    Task<ProductViewModel> GetById(Guid id);
 }
