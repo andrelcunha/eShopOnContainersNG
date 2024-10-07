@@ -1,9 +1,31 @@
+using ALC.Core.Messages;
+
 namespace ALC.Core.DomainObjects
 {
     public abstract class Entity
     {
         public Guid Id { get; set; }
 
+        protected Entity()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        private List<Event> _notifications;
+
+        public IReadOnlyCollection<Event> Notifications => _notifications?.AsReadOnly();
+
+        public void AddEvent(Event eventIObj)
+        {
+            _notifications ??= new List<Event>();
+        }
+
+        public void ClearEvents()
+        {
+            _notifications?.Clear();
+        }
+
+        #region comparisons
         public override bool Equals(object? obj)
         {
             var compareTo = obj as Entity;
@@ -39,6 +61,6 @@ namespace ALC.Core.DomainObjects
         {
             return $"{GetType().Name} [Id={Id}]";
         }
-
+        #endregion
     }
 }

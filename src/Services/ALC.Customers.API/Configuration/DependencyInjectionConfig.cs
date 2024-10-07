@@ -1,5 +1,6 @@
 using ALC.Core.Mediator;
 using ALC.Customers.API.Application.Commands;
+using ALC.Customers.API.Application.Events;
 using ALC.Customers.API.Data;
 using ALC.Customers.API.Data.Repository;
 using ALC.Customers.API.Models;
@@ -15,6 +16,7 @@ public static class DependencyInjectionConfig
         services.AddScoped<IMediatorHandler, MediatorHandler>();
         services.AddScoped<IRequestHandler<RegisterCustomerCommand, ValidationResult>, CustomerCommandHandler>();
 
+        services.AddScoped<INotificationHandler<CustomerRegisteredEvent>, CustomerEventHandler>();
         services.AddScoped<ICustomerRepository, CustomerRepository>();
         services.AddScoped<CustomerContext>();
     }

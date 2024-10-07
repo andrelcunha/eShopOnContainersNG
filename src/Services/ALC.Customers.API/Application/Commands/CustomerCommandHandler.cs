@@ -15,14 +15,14 @@ public class CustomerCommandHandler : CommandHandler,
         _customerRepository = customerRepository;
     }
 
-    public async Task<ValidationResult> Handle(RegisterCustomerCommand request, CancellationToken cancellationToken)
+    public async Task<ValidationResult> Handle(RegisterCustomerCommand message, CancellationToken cancellationToken)
     {
-        if (!request.IsValid())
-            return request.ValidationResult;
+        if (!message.IsValid())
+            return message.ValidationResult;
 
-        var customer = new Customer(request.Id, request.Name, request.Email, request.Cpf);
+        var customer = new Customer(message.Id, message.Name, message.Email, message.Cpf);
 
-        var customerExists = await _customerRepository.GetByCpf(request.Cpf);
+        var customerExists = await _customerRepository.GetByCpf(message.Cpf);
 
         if (customerExists is not null)
         {
@@ -31,6 +31,8 @@ public class CustomerCommandHandler : CommandHandler,
         }
 
         _customerRepository.Add(customer);
+
+        customer.AddEvent(new CustomerRegistradedEvent(message.Id, message.Name, message.Email, message.Cpf));
 
         return await PersistData(_customerRepository.UnitOfWork);
     }

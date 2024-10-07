@@ -1,6 +1,8 @@
+using MediatR;
+
 namespace ALC.Core.Messages;
 
-public class Event
+public class Event : Message, INotification
 {
 
 }
