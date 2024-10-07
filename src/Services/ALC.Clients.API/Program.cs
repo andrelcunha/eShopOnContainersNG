@@ -1,5 +1,5 @@
 
-namespace ALC.Client.API;
+namespace ALC.Clients.API;
 
 public class Program
 {

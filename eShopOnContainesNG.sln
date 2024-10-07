@@ -29,7 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApp", "WebApp", "{6DDC25
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALC.WebApp.MVC", "src\WebApp\ALC.WebApp.MVC\ALC.WebApp.MVC.csproj", "{FF0E315D-1E6D-45C1-97A6-30A0F9985098}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALC.Client.API", "src\Services\ALC.Client.API\ALC.Client.API.csproj", "{0D2A947C-C5E6-4B5B-AD52-1CC3EDED387D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALC.Clients.API", "src\Services\ALC.Clients.API\ALC.Clients.API.csproj", "{0D2A947C-C5E6-4B5B-AD52-1CC3EDED387D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
