@@ -1,5 +1,6 @@
 using ALC.Catalog.API.Models;
 using ALC.Catalog.API.Repository;
+using ALC.WebAPI.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static ALC.WebAPI.Core.Identidade.RequiredClaimFilter;
@@ -7,9 +8,8 @@ using static ALC.WebAPI.Core.Identidade.RequiredClaimFilter;
 namespace ALC.Catalog.API.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
     [Authorize]
-    public class CatalogController : ControllerBase
+    public class CatalogController : MainController
     {
         private readonly IProductRepository _repository;
         public CatalogController(IProductRepository repository)

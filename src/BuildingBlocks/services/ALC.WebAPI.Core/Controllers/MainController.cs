@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace ALC.Authentication.API.Controllers;
+namespace ALC.WebAPI.Controllers;
 
 [ApiController]
 public abstract class MainController : ControllerBase

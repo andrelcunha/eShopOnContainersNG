@@ -2,6 +2,7 @@ using ALC.Authentication.API.Models;
 using ALC.Authentication.API.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ALC.WebAPI.Controllers;
 
 namespace ALC.Authentication.API.Controllers
 {

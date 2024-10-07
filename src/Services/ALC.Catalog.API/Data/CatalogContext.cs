@@ -1,6 +1,8 @@
+using FluentValidation.Results;
 using ALC.Catalog.API.Models;
 using ALC.Core.Data;
 using Microsoft.EntityFrameworkCore;
+using ALC.Core.Messages;
 
 namespace ALC.Catalog.API.Data
 {
@@ -12,6 +14,9 @@ namespace ALC.Catalog.API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Ignore<ValidationResult>();
+            modelBuilder.Ignore<Event>();
+
             foreach(var property in modelBuilder.Model.GetEntityTypes().SelectMany(
                 e => e.GetProperties().Where(p => p.ClrType == typeof(string))))
                 property.SetColumnType("varchar(100)");

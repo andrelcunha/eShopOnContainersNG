@@ -3,6 +3,8 @@ using ALC.Customers.API.Models;
 using ALC.Core.Data;
 using ALC.Core.Mediator;
 using ALC.Core.DomainObjects;
+using ALC.Core.Messages;
+using FluentValidation.Results;
 
 namespace ALC.Customers.API.Data;
 
@@ -21,6 +23,9 @@ public sealed class CustomerContext : DbContext,  IUnitOfWork
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Ignore<ValidationResult>();
+        modelBuilder.Ignore<Event>();
+
         foreach(var property in modelBuilder.Model.GetEntityTypes().SelectMany(
             e => e.GetProperties().Where(p => p.ClrType == typeof(string))))
             property.SetColumnType("varchar(100)");
