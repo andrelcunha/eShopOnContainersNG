@@ -20,9 +20,4 @@
     <ProjectReference Include="..\..\BuildingBlocks\Core\ALC.Core\ALC.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Application/" />
-    <Folder Include="Application/Commands/" />
-  </ItemGroup>
-
 </Project>

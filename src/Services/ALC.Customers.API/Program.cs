@@ -12,6 +12,9 @@ public class Program
 
         builder.Services.AddApiConfiguration(configuration);
 
+        builder.Services.AddMediatR(cfg =>
+            cfg.RegisterServicesFromAssemblyContaining<Program>());
+
         builder.Services.RegisterServices();
 
         var app = builder.Build();

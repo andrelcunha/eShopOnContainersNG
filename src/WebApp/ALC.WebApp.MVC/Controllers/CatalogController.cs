@@ -15,6 +15,7 @@ namespace ALC.WebApp.MVC.Controllers
         // GET: CatalogController
         [HttpGet]
         [Route("")]
+        [Route("products")]
         public async Task<ActionResult> Index()
         {
             var products = await _catalogService.GetAll();
