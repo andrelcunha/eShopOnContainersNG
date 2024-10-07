@@ -22,6 +22,9 @@ namespace ALC.Authentication.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserRegister userRegister)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var user = new IdentityUser
             {
                 UserName = userRegister.Email,
@@ -30,17 +33,19 @@ namespace ALC.Authentication.API.Controllers
             };
 
             var result = await _userManager.CreateAsync(user, userRegister.Password);
-        
-            if(!result.Succeeded)
-                return BadRequest(result.Errors);
 
-            var token = await _tokenService.GenerateJwt(userRegister.Email);
-            if (token is null)
+            if (result.Succeeded)
             {
-                var errorResponse = new {message = "An error occurred while processing your request"};
-                return StatusCode(500, errorResponse);
+                var token = await _tokenService.GenerateJwt(userRegister.Email);
+                if (token is null)
+                {
+                    var errorResponse = new { message = "An error occurred while processing your request" };
+                    return StatusCode(500, errorResponse);
+                }
+                return Ok(token);
             }
-            return Ok(token);
+
+            return BadRequest(result.Errors);
         }
 
         [HttpPost("login")]
