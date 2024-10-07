@@ -1,6 +1,6 @@
 using ALC.Core.DomainObjects;
 
-namespace ALC.Clients.API.Models;
+namespace ALC.Customers.API.Models;
 
 public class Address : Entity
 {
@@ -13,9 +13,9 @@ public class Address : Entity
     public string City { get; private set; } = string.Empty;
     public string State { get; private set; } = string.Empty;
     public string Country { get; private set; } = string.Empty;
-    public Guid ClientId { get; private set; }
+    public Guid CustomerId { get; private set; }
 
-    public Client? Client { get; private set; }
+    public Customer? Customer { get; private set; }
 
     public Address() {} //EF
 

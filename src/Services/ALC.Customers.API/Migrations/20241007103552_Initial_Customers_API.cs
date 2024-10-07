@@ -3,16 +3,16 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ALC.Clients.API.Migrations
+namespace ALC.Customers.API.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial_Clients_API : Migration
+    public partial class Initial_Customers_API : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Clients",
+                name: "Customers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -25,7 +25,7 @@ namespace ALC.Clients.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Clients", x => x.Id);
+                    table.PrimaryKey("PK_Customers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -41,22 +41,22 @@ namespace ALC.Clients.API.Migrations
                     City = table.Column<string>(type: "varchar(100)", nullable: false),
                     State = table.Column<string>(type: "varchar(50)", nullable: false),
                     Country = table.Column<string>(type: "varchar(100)", nullable: false),
-                    ClientId = table.Column<Guid>(type: "uuid", nullable: false)
+                    CustomerId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Addresses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Addresses_Clients_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "Clients",
+                        name: "FK_Addresses_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Addresses_ClientId",
+                name: "IX_Addresses_CustomerId",
                 table: "Addresses",
-                column: "ClientId",
+                column: "CustomerId",
                 unique: true);
         }
 
@@ -67,7 +67,7 @@ namespace ALC.Clients.API.Migrations
                 name: "Addresses");
 
             migrationBuilder.DropTable(
-                name: "Clients");
+                name: "Customers");
         }
     }
 }

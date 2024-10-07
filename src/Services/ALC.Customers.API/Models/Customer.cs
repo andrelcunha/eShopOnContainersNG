@@ -1,9 +1,9 @@
 using System;
 using ALC.Core.DomainObjects;
 
-namespace ALC.Clients.API.Models;
+namespace ALC.Customers.API.Models;
 
-public class Client : Entity, IAggregationRoot
+public class Customer : Entity, IAggregationRoot
 {
     public string Name { get; private set; } = string.Empty;
     public Email Email { get; private set; }
@@ -13,9 +13,9 @@ public class Client : Entity, IAggregationRoot
     public DateTime UpdatedAt { get; private set; }
     public Address? Address { get; private set; }
 
-    public Client() { } //EF 
+    public Customer() { } //EF 
 
-    public Client(Guid id,  string name, string email, string cpf)
+    public Customer(Guid id,  string name, string email, string cpf)
     {
         Id = id;
         Name = name;

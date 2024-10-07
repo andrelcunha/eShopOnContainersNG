@@ -1,11 +1,11 @@
-using ALC.Clients.API.Data;
+using ALC.Customers.API.Data;
 
-namespace ALC.Clients.API.Configuration;
+namespace ALC.Customers.API.Configuration;
 
 public static class DependencyInjectionConfig
 {
     public static void RegisterServices(this IServiceCollection services)
     {
-        services.AddScoped<ClientContext>();
+        services.AddScoped<CustomerContext>();
     }
 }

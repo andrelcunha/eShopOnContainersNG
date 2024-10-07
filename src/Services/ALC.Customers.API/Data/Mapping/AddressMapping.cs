@@ -1,10 +1,10 @@
 using System;
-using ALC.Clients.API.Models;
+using ALC.Customers.API.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ALC.Clients.API.Data.Mapping;
+namespace ALC.Customers.API.Data.Mapping;
 
 public class AddressMapping : IEntityTypeConfiguration<Address>
 {

@@ -1,6 +1,0 @@
-@ALC.Clients.API_HostAddress = http://localhost:5074
-
-GET {{ALC.Clients.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

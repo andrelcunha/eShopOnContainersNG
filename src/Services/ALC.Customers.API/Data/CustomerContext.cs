@@ -1,18 +1,18 @@
 using Microsoft.EntityFrameworkCore;
-using ALC.Clients.API.Models;
+using ALC.Customers.API.Models;
 using ALC.Core.Data;
 
-namespace ALC.Clients.API.Data;
+namespace ALC.Customers.API.Data;
 
-public sealed class ClientContext : DbContext,  IUnitOfWork
+public sealed class CustomerContext : DbContext,  IUnitOfWork
 {
-    public ClientContext(DbContextOptions<ClientContext> options) : base(options)
+    public CustomerContext(DbContextOptions<CustomerContext> options) : base(options)
     {
         ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         ChangeTracker.AutoDetectChangesEnabled = false;
     }
 
-    public DbSet<Client> Clients { get; set; }
+    public DbSet<Customer> Customers { get; set; }
     public DbSet<Address> Addresses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ public sealed class ClientContext : DbContext,  IUnitOfWork
         foreach(var relationship in modelBuilder.Model.GetEntityTypes()
             .SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
 
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ClientContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(CustomerContext).Assembly);
     }
 
     public async Task<bool> Commit()

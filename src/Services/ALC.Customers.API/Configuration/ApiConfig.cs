@@ -1,13 +1,13 @@
-using ALC.Clients.API.Data;
+using ALC.Customers.API.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace ALC.Clients.API.Configuration;
+namespace ALC.Customers.API.Configuration;
 
 public static class ApiConfig
 {
     public static void AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<ClientContext>(options =>
+        services.AddDbContext<CustomerContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
         services.AddControllers();

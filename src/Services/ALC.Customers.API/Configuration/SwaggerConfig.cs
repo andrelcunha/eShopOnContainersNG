@@ -1,4 +1,4 @@
-namespace ALC.Clients.API.Configuration;
+namespace ALC.Customers.API.Configuration;
 
 public static class SwaggerConfig
 {

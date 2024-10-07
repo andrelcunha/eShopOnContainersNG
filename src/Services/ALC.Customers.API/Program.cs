@@ -1,7 +1,7 @@
 
-using ALC.Clients.API.Configuration;
+using ALC.Customers.API.Configuration;
 
-namespace ALC.Clients.API;
+namespace ALC.Customers.API;
 
 public class Program
 {

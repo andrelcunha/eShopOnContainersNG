@@ -1,13 +1,13 @@
-using ALC.Clients.API.Models;
+using ALC.Customers.API.Models;
 using ALC.Core.DomainObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ALC.Clients.API.Data.Mapping;
+namespace ALC.Customers.API.Data.Mapping;
 
-public class ClientMapping : IEntityTypeConfiguration<Client>
+public class CustomerMapping : IEntityTypeConfiguration<Customer>
 {
-    public void Configure(EntityTypeBuilder<Client> builder)
+    public void Configure(EntityTypeBuilder<Customer> builder)
     {
         builder.HasKey(c => c.Id);
 
@@ -32,8 +32,8 @@ public class ClientMapping : IEntityTypeConfiguration<Client>
         });
 
         builder.HasOne(c=>c.Address)
-            .WithOne(c => c.Client);
+            .WithOne(c => c.Customer);
 
-        builder.ToTable("Clients");
+        builder.ToTable("Customers");
     }
 }
