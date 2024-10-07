@@ -13,6 +13,8 @@ public class Client : Entity, IAggregationRoot
     public DateTime UpdatedAt { get; private set; }
     public Address? Address { get; private set; }
 
+    public Client() { } //EF 
+
     public Client(Guid id,  string name, string email, string cpf)
     {
         Id = id;

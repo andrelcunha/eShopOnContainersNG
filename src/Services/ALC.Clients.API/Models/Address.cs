@@ -17,6 +17,8 @@ public class Address : Entity
 
     public Client? Client { get; private set; }
 
+    public Address() {} //EF
+
     public Address(string street, string number, string? additionalInfo, string neighborhood, string postalCode, string city, string state, string country)
     {
         Street = street;
