@@ -12,6 +12,6 @@ public class CustomHttpRequestException : Exception
 
     public CustomHttpRequestException(HttpStatusCode statusCode)
     {
-        statusCode = StatusCode;
+        StatusCode = statusCode;
     }
 }

@@ -17,7 +17,7 @@ public class ExceptionMiddleware
     {
         try
         {
-            await _next(httpContext);
+            await _next(httpContext);            
         }
         catch (CustomHttpRequestException ex)
         {

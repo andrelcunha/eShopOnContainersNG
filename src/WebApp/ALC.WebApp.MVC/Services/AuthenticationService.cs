@@ -21,6 +21,13 @@ public class AuthenticationService : Service, IAuthenticationService
 
         var response = await _httpClient.PostAsync("login", content);
 
+        if(!HandleResponseErrors(response))
+        {
+            return new UserResponse
+            {
+                ResponseResult = await DeserializeResponseObject<ResponseResult>(response)
+            };
+        }
    
         return await DeserializeResponseObject<UserResponse>(response);
     }
@@ -30,6 +37,14 @@ public class AuthenticationService : Service, IAuthenticationService
         var content = GetContent(userRegister);
 
         var response = await _httpClient.PostAsync("register", content);
+
+        if(!HandleResponseErrors(response))
+        {
+            return new UserResponse
+            {
+                ResponseResult = await DeserializeResponseObject<ResponseResult>(response)
+            };
+        }
 
         return await DeserializeResponseObject<UserResponse>(response);
     }

@@ -16,6 +16,8 @@ public class CatalogService : Service, ICatalogService
     {
         var response = _httpClient.GetAsync("products").Result;
 
+        HandleResponseErrors(response);
+
         return await DeserializeResponseObject<IEnumerable<ProductViewModel>>(response);
     }
 
@@ -23,6 +25,8 @@ public class CatalogService : Service, ICatalogService
     {
         var response = _httpClient.GetAsync($"products/{id}").Result;
 
+        HandleResponseErrors(response);
+        
         return DeserializeResponseObject<ProductViewModel>(response);
     }
 }

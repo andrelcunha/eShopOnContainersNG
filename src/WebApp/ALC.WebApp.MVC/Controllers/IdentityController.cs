@@ -43,7 +43,7 @@ namespace ALC.Authentication.API.Controllers
         // GET: Authentication
         [HttpGet]
         [Route("login")]
-        public ActionResult Login(string returnUrl = null)
+        public IActionResult Login(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
             return View();
@@ -51,11 +51,26 @@ namespace ALC.Authentication.API.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult> Login(UserLogin user, string returnUrl = null)
+        public async Task<IActionResult> Login(UserLogin user, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            if (!ModelState.IsValid) return View(user);
+            
             var response = await _authenticationService.Login(user);
+            
+            if(ResponseHasErrors(response.ResponseResult)) return View(user);
+
             await ExecuteLogin(response);
+            
+            if (string.IsNullOrEmpty(returnUrl)) 
+            {
+                if(Url.IsLocalUrl(returnUrl))
+                {
+                    return RedirectToAction(returnUrl);
+                }
+                else return RedirectToAction("Index", "Catalog");
+            }
+
             return RedirectToAction("Index", "Home");
         }
 
