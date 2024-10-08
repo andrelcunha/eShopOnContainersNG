@@ -19,19 +19,16 @@ public class Cpf
     {
         cpf = cpf.OnlyNumbers();
 
-        if (cpf.Length > CpfMaxLength) 
+        if (cpf.Length > CpfMaxLength)
             return false;
 
-        while(cpf.Length != CpfMaxLength)
+        while (cpf.Length != CpfMaxLength)
             cpf = '0' + cpf;
-        
-        var equal = true;
 
+        var equal = true;
         for (var i = 1; i < CpfMaxLength && equal; i++)
-        {
-            if(cpf[i] != cpf[0])
-            equal = false;
-        }
+            if (cpf[i] != cpf[0])
+                equal = false;
 
         if (equal || cpf == "12345678909")
             return false;
@@ -40,7 +37,7 @@ public class Cpf
 
         for (var i = 0; i < CpfMaxLength; i++)
             numbers[i] = int.Parse(cpf[i].ToString());
-        
+
         var sum = 0;
         for (var i = 0; i < 9; i++)
             sum += (10 - i) * numbers[i];
@@ -49,12 +46,26 @@ public class Cpf
 
         if (result == 1 || result == 0)
         {
+            if (numbers[9] != 0)
+                return false;
+        }
+        else if (numbers[9] != 11 - result)
+            return false;
+
+        sum = 0;
+        for (var i = 0; i < 10; i++)
+            sum += (11 - i) * numbers[i];
+
+        result = sum % 11;
+
+        if (result == 1 || result == 0)
+        {
             if (numbers[10] != 0)
                 return false;
         }
         else if (numbers[10] != 11 - result)
             return false;
-        
+
         return true;
     }
 }
