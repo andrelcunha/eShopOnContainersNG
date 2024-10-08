@@ -15,19 +15,29 @@
 
             <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
                 <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Cpf"></label>
+                    <input asp-for="Cpf" class="form-control" />
+                    <span asp-validation-for="Cpf" class="text-danger"></span>
+                </div>
+                <div class="form-group">
                     <label asp-for="Email"></label>
-                    <input asp-for="Email" class="form-control"/>
+                    <input asp-for="Email" class="form-control" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Password"></label>
-                    <input type="password" asp-for="Password" class="form-control"/>
+                    <input type="password" asp-for="Password" class="form-control" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="ConfirmPassword"></label>
-                    <input type="password" asp-for="ConfirmPassword" class="form-control"/>
+                    <input type="password" asp-for="ConfirmPassword" class="form-control" />
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
 

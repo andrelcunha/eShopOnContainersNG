@@ -1,6 +1,7 @@
 using ALC.WebApp.MVC.Extensions;
 using ALC.WebApp.MVC.Services;
 using ALC.WebApp.MVC.Services.Handlers;
+using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Polly;
 using Polly.Extensions.Http;
 using Polly.Retry;
@@ -11,6 +12,8 @@ public static class DependencyInjectionConfig
 {
     public static void RegisterServices(this IServiceCollection services)
     {
+        services.AddSingleton<IValidationAttributeAdapterProvider, CpfValidationAttributeProvider>();
+
         services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
 
         services.AddHttpClient<IAuthenticationService, AuthenticationService>();
@@ -21,6 +24,7 @@ public static class DependencyInjectionConfig
                 p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
         services.AddHttpContextAccessor();
+        
         services.AddScoped<IUser,AspNetUser>();
     }
 
