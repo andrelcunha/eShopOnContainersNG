@@ -3,6 +3,8 @@ using ALC.Authentication.API.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ALC.WebAPI.Controllers;
+using ALC.Core.Messages.Integration;
+using EasyNetQ;
 
 namespace ALC.Authentication.API.Controllers
 {
@@ -13,11 +15,15 @@ namespace ALC.Authentication.API.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ITokenService _tokenService;
-        public AuthController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, ITokenService tokenService)
+
+        private IBus _bus;
+
+        public AuthController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, ITokenService tokenService, IBus bus)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _tokenService = tokenService;
+            _bus = bus;
         }
 
         [HttpPost("register")]
@@ -37,6 +43,9 @@ namespace ALC.Authentication.API.Controllers
 
             if (result.Succeeded)
             {
+                //Something here => integration
+                var success = await RegisterCustomer(userRegister);
+
                 var token = await _tokenService.GenerateJwt(userRegister.Email);
                 if (token is null)
                 {
@@ -47,6 +56,21 @@ namespace ALC.Authentication.API.Controllers
             }
 
             return BadRequest(result.Errors);
+        }
+
+        private async Task<ResponseMessage> RegisterCustomer(UserRegister userRegister)
+        {
+            var user =  await _userManager.FindByEmailAsync(userRegister.Email);
+            var registeredUser = new UserRegisteredIntegrationEvent(
+                Guid.Parse(user.Id), 
+                userRegister.Name, 
+                userRegister.Email,
+                userRegister.Cpf);
+
+            // _bus = RabbitHutch.CreateBus("host=localhost:5672");
+            var success = await _bus.Rpc.RequestAsync<UserRegisteredIntegrationEvent, ResponseMessage> (registeredUser);
+            return success;
+
         }
 
         [HttpPost("login")]

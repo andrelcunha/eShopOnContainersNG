@@ -4,6 +4,8 @@ namespace ALC.Authentication.API.Models
 {
     public class UserLogin
     {
+
+
         [Required(ErrorMessage = "The field {0} is required")]
         [EmailAddress(ErrorMessage = "The field {0} is in a invalid format")]   
         public string Email { get; set; } = string.Empty;
@@ -15,6 +17,12 @@ namespace ALC.Authentication.API.Models
 
     public class UserRegister
     {
+        [Required(ErrorMessage = "The field {0} is required.")]
+        public string Name { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "The field {0} is required.")]
+        public string Cpf { get; set; } = string.Empty;
+        
         [Required(ErrorMessage = "The field {0} is required")]
         [EmailAddress(ErrorMessage = "The field {0} is in a invalid format")]
         public string Email { get; set; } = string.Empty;
