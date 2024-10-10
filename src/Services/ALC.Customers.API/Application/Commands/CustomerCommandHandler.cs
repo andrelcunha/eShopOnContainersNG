@@ -1,4 +1,5 @@
 using ALC.Core.Messages;
+using ALC.Customers.API.Application.Events;
 using ALC.Customers.API.Models;
 using FluentValidation.Results;
 using MediatR;
@@ -32,7 +33,7 @@ public class CustomerCommandHandler : CommandHandler,
 
         _customerRepository.Add(customer);
 
-        customer.AddEvent(new CustomerRegistradedEvent(message.Id, message.Name, message.Email, message.Cpf));
+        customer.AddEvent(new CustomerRegisteredEvent(message.Id, message.Name, message.Email, message.Cpf));
 
         return await PersistData(_customerRepository.UnitOfWork);
     }

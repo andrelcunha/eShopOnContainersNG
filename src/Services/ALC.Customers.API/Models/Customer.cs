@@ -22,8 +22,8 @@ public class Customer : Entity, IAggregationRoot
         Email = new Email(email);
         Cpf = new Cpf(cpf);
         Excluded = false;
-        CreatedAt = DateTime.Now;
-        UpdatedAt = DateTime.Now;
+        CreatedAt = DateTime.UtcNow;
+        UpdatedAt = DateTime.UtcNow;
     }
 
     public void ChangeEmail(string email)

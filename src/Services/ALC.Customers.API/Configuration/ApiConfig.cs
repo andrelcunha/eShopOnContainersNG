@@ -33,6 +33,8 @@ public static class ApiConfig
 
         app.UseHttpsRedirection();
 
+        app.UseRouting();
+
         app.UseCors("Total");
 
         app.UseAuthConfiguration();
